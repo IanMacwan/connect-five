@@ -7,20 +7,21 @@ import java.awt.*;
 public class ConnectFive extends JPanel implements MouseListener {
     
     private char[][] board;
-    private boolean currPlayer; // true is R, and false is B
-    public boolean gameOver;
+    public boolean currPlayer; // true is R, and false is B
     public String playerRed;
     public String playerBlue;
 
+    private int mouseX;
+
     public boolean isOn = true;
-    public JFrame frame;
+    public Container container;
 
     private final int ROW = 6;
     private final int COL = 7;
     private final int SPACE = 100;
     
 
-    public ConnectFive(JFrame frame) {
+    public ConnectFive(Container container) {
 
         // Set up Jpanel.
         this.setSize((ROW*100), COL * 100);
@@ -28,39 +29,23 @@ public class ConnectFive extends JPanel implements MouseListener {
         this.setVisible(false);
         this.setLayout(null);
 
-        this.frame = frame;
+        this.container = container;
 
         // Initialize the board and current player. Red will always go first.
         board = new char[ROW][COL];
         currPlayer = true;
-        // Asks for user input for player names.
-        playerRed = "name1"; // JOptionPane.showInputDialog(this, "Red PLayer Name?: ");
-        playerBlue = "name2"; // JOptionPane.showInputDialog(this, "Blue PLayer Name?: ");
-        gameOver = false;
 
-        fillBoard();
+        // fillBoard();
 
         this.addMouseListener(this);
 
-        JLabel redName = new JLabel(this.playerRed);
-        JLabel blueName = new JLabel(this.playerBlue);
-
-        redName.setFont(new Font("Serif", Font.BOLD, 20));
-        blueName.setFont(new Font("Serif", Font.BOLD, 20));
-
-        redName.setForeground(Color.RED);
-        blueName.setForeground(Color.BLUE);
-
-        redName.setBounds(80, 32, 200, 20);
-        blueName.setBounds(80, 62, 200, 20);
-
-        this.add(redName);
-        this.add(blueName);
+        CursorLocationListener cll = new CursorLocationListener();
+        this.addMouseMotionListener(cll);
 
     }
 
     // Private method to initialize gameboard by filling it with empty spaces.
-    private void fillBoard() {
+    public void fillBoard() {
 
         // Fills the board with empty spaces
         for (int i = 0; i < ROW; i++) {
@@ -107,12 +92,13 @@ public class ConnectFive extends JPanel implements MouseListener {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setColor(Color.RED);
-        g2d.fillOval(50, 30, 20, 20);
-
-        g2d.setColor(Color.BLUE);
-        g2d.fillOval(50, 60, 20, 20);
-        
+        if (currPlayer) {
+            g2d.setColor(Color.RED);
+        } else {
+            g2d.setColor(Color.BLUE);
+        }
+        g2d.setStroke(new BasicStroke(5));
+        g2d.drawOval(mouseX - 45, 0, 90, 90);
 
         for (int y = 100; y < (ROW * SPACE) + 100; y += SPACE) {
 
@@ -235,15 +221,16 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         if (x >= 500 && x <= 599) { dropDisc(5); }
 
-        if (x >= 600 && x <= 700) { 
-            dropDisc(6);
-        }
+        if (x >= 600 && x <= 700) { dropDisc(6); }
 
         if (checkWin()) {
+
             System.out.println("WIN" + currPlayer);
             this.setVisible(false);
-            frame.remove(this);
+            container.winnerScreen.setVisible(true);
+
         } 
+
         repaint();
     } 
 
@@ -258,10 +245,21 @@ public class ConnectFive extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {  } // Do nothing
-
-    
-    
     
 
+    private class CursorLocationListener implements MouseMotionListener {
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+
+            mouseX = e.getX();
+            repaint();
+
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {  } // Do nothing
+
+    }
     
 }

@@ -1,12 +1,14 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicBorders;
+
 import java.awt.event.*;
 import java.awt.*;
 
 
 public class TitleScreen extends JPanel {
 
-    public JFrame frame;
-    public JPanel game;
+    public Container container;
 
     private JButton playButton;
     private JButton exitButton;
@@ -14,24 +16,27 @@ public class TitleScreen extends JPanel {
     private JLabel titleOne;
     private JLabel titleTwo;
 
-    public TitleScreen(JFrame frame, JPanel game) {
+    public TitleScreen(Container container) {
 
         this.setSize(700, 700);
         this.setBackground(Color.BLACK);
         this.setVisible(true);
         this.setLayout(null);
 
-        this.frame = frame;
-        this.game = game;
+        this.container = container;
 
         titleOne = new JLabel("CONNECT");
+        titleOne.setFont(new Font("Serif", Font.BOLD, 36));
+        titleOne.setForeground(Color.BLUE);
+        titleOne.setBounds(200, 200, 300, 50);
+
         titleTwo = new JLabel("FIVE");
+        titleTwo.setFont(new Font("Serif", Font.BOLD, 36));
+        titleTwo.setForeground(Color.RED);
+        titleTwo.setBounds(400, 200, 300, 50);
 
-
-
-
-
-
+        this.add(titleOne);
+        this.add(titleTwo);
 
         playButton = new JButton("Play");
         playButton.setBounds(200, 400, 300, 50);
@@ -41,7 +46,7 @@ public class TitleScreen extends JPanel {
         exitButton = new JButton("Exit");
         exitButton.setBounds(200, 475, 300, 50);
         exitButton.setFont(new Font("Serif", Font.BOLD, 20));
-        playButton.setBackground(Color.GRAY);
+        exitButton.setBackground(Color.GRAY);
     
         this.add(playButton);
         this.add(exitButton);
@@ -56,8 +61,8 @@ public class TitleScreen extends JPanel {
     private void switchGame() {
 
         this.setVisible(false);
-        frame.remove(this);
-        game.setVisible(true);
+        container.gameScreen.fillBoard();
+        container.gameScreen.setVisible(true);
 
     }
  
