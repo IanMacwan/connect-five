@@ -8,12 +8,8 @@ public class ConnectFive extends JPanel implements MouseListener {
     
     private char[][] board;
     public boolean currPlayer; // true is R, and false is B
-    public String playerRed;
-    public String playerBlue;
 
     private int mouseX;
-
-    public boolean isOn = true;
     public Container container;
 
     private final int ROW = 6;
@@ -136,8 +132,6 @@ public class ConnectFive extends JPanel implements MouseListener {
 
                 } 
 
-
-
             }
 
         }
@@ -203,7 +197,7 @@ public class ConnectFive extends JPanel implements MouseListener {
         return false;
     }
 
-
+    
     @Override
     public void mouseClicked(MouseEvent e) { 
         
@@ -225,9 +219,8 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         if (checkWin()) {
 
-            System.out.println("WIN" + currPlayer);
             this.setVisible(false);
-            container.winnerScreen.setVisible(true);
+            container.mainFrame.add(new WinnerScreen(container));
 
         } 
 

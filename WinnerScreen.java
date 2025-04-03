@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicBorders;
-
 import java.awt.event.*;
 import java.awt.*;
 
@@ -19,31 +16,32 @@ public class WinnerScreen extends JPanel {
 
         this.setSize(700, 700);
         this.setBackground(Color.BLACK);
-        this.setVisible(false);
+        this.setVisible(true);
         this.setLayout(null);
 
         this.container = container;
 
+        titleOne = new JLabel();
+        titleOne.setFont(new Font("Serif", Font.BOLD, 36));
+
         if (container.gameScreen.currPlayer) {
 
-            titleOne = new JLabel("RED PLAYER");
-            titleOne.setFont(new Font("Serif", Font.BOLD, 36));
+            titleOne.setText("RED");
             titleOne.setForeground(Color.RED);
-            titleOne.setBounds(200, 200, 300, 50);
+            titleOne.setBounds(265, 200, 300, 50);
 
         } else {
 
-            titleOne = new JLabel("BLUE PLAYER");
-            titleOne.setFont(new Font("Serif", Font.BOLD, 36));
+            titleOne.setText("BLUE");
             titleOne.setForeground(Color.BLUE);
-            titleOne.setBounds(200, 200, 300, 50);
-        
+            titleOne.setBounds(245, 200, 300, 50);
+
         }
 
         titleTwo = new JLabel("WINS!");
         titleTwo.setFont(new Font("Serif", Font.BOLD, 36));
         titleTwo.setForeground(Color.GRAY);
-        titleTwo.setBounds(400, 200, 300, 50);
+        titleTwo.setBounds(355, 200, 300, 50);
 
         this.add(titleOne);
         this.add(titleTwo);
@@ -62,12 +60,13 @@ public class WinnerScreen extends JPanel {
     }
 
     private void switchGame() {
-
+  
        this.setVisible(false);
+       container.mainFrame.remove(this);
        container.titleScreen.setVisible(true);
 
     }
- 
+
     private class titleListener implements ActionListener {
 
         @Override
