@@ -24,24 +24,36 @@ public class WinnerScreen extends JPanel {
         titleOne = new JLabel();
         titleOne.setFont(new Font("Serif", Font.BOLD, 36));
 
-        if (container.gameScreen.currPlayer) {
+        titleTwo = new JLabel("WINS!");
+        titleTwo.setFont(new Font("Serif", Font.BOLD, 36));
+        titleTwo.setForeground(Color.GRAY);
+
+        if (container.gameScreen.isTie) {
+
+            titleOne.setText("TIE!");
+            titleOne.setForeground(Color.GRAY);
+            titleOne.setBounds(310, 200, 300, 50);
+
+
+        } else if (container.gameScreen.currPlayer) {
 
             titleOne.setText("RED");
             titleOne.setForeground(Color.RED);
             titleOne.setBounds(265, 200, 300, 50);
 
-        } else {
+            titleTwo.setBounds(355, 200, 300, 50);
+
+        } else if (!(container.gameScreen.currPlayer)) {
 
             titleOne.setText("BLUE");
             titleOne.setForeground(Color.BLUE);
             titleOne.setBounds(245, 200, 300, 50);
 
+            titleTwo.setBounds(355, 200, 300, 50);
+
         }
 
-        titleTwo = new JLabel("WINS!");
-        titleTwo.setFont(new Font("Serif", Font.BOLD, 36));
-        titleTwo.setForeground(Color.GRAY);
-        titleTwo.setBounds(355, 200, 300, 50);
+
 
         this.add(titleOne);
         this.add(titleTwo);

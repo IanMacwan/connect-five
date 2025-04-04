@@ -12,6 +12,8 @@ public class ConnectFive extends JPanel implements MouseListener {
     private int mouseX;
     public Container container;
 
+    public boolean isTie = false;
+
     private final int ROW = 6;
     private final int COL = 7;
     private final int SPACE = 100;
@@ -62,6 +64,8 @@ public class ConnectFive extends JPanel implements MouseListener {
             board[rand.nextInt(ROW)][rand.nextInt(COL)] = 'X';
 
         }
+
+        this.isTie = false;
 
     }
 
@@ -197,7 +201,23 @@ public class ConnectFive extends JPanel implements MouseListener {
         return false;
     }
 
-    
+    // Private method to check if a tie has happened
+    private boolean checkTie() {
+        
+        for (int i = 0; i < ROW; i++) {
+
+            for (int j = 0; j < COL; j++) {
+
+                if (board[i][j] == ' ') { return false; }
+
+            }
+
+        }
+
+        isTie = true;
+        return true;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) { 
         
@@ -222,7 +242,13 @@ public class ConnectFive extends JPanel implements MouseListener {
             this.setVisible(false);
             container.mainFrame.add(new WinnerScreen(container));
 
-        } 
+        } else if (checkTie()) {
+
+            this.setVisible(false);
+            container.mainFrame.add(new WinnerScreen(container));
+
+        }
+
 
         repaint();
     } 
@@ -239,7 +265,6 @@ public class ConnectFive extends JPanel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {  } // Do nothing
     
-
     private class CursorLocationListener implements MouseMotionListener {
 
         @Override
