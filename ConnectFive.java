@@ -1,7 +1,7 @@
-import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
-import java.awt.*;
+import javax.swing.*;
 
 
 public class ConnectFive extends JPanel implements MouseListener {

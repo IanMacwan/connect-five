@@ -1,6 +1,6 @@
-import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 
 public class WinnerScreen extends JPanel {
@@ -14,7 +14,7 @@ public class WinnerScreen extends JPanel {
 
     public WinnerScreen(Container container) {
 
-        this.setSize(700, 700);
+        this.setSize(720, 740);
         this.setBackground(Color.BLACK);
         this.setVisible(true);
         this.setLayout(null);
