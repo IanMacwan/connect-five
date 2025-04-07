@@ -37,17 +37,17 @@ public class WinnerScreen extends JPanel {
 
         } else if (container.gameScreen.currPlayer) {
 
-            titleOne.setText("RED");
-            titleOne.setForeground(Color.RED);
-            titleOne.setBounds(250, 200, 300, 50);
+            titleOne.setText("BLUE");
+            titleOne.setForeground(Color.BLUE);
+            titleOne.setBounds(245, 200, 300, 50);
 
             titleTwo.setBounds(355, 200, 300, 50);
 
         } else if (!(container.gameScreen.currPlayer)) {
 
-            titleOne.setText("BLUE");
-            titleOne.setForeground(Color.BLUE);
-            titleOne.setBounds(245, 200, 300, 50);
+            titleOne.setText("RED");
+            titleOne.setForeground(Color.RED);
+            titleOne.setBounds(250, 200, 300, 50);
 
             titleTwo.setBounds(355, 200, 300, 50);
 

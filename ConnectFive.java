@@ -180,7 +180,7 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         }
 
-        // Check diagonal connect four 
+        // Check forward diagonal connect four 
         for (int i = 4; i < ROW; i++) {
 
             for (int j = 0; j < COL - 4; j++) {
@@ -195,6 +195,21 @@ public class ConnectFive extends JPanel implements MouseListener {
 
             }
 
+        }
+
+        // Check diagonal backward connect five 
+        for (int i = 0; i < ROW - 4; i++) {
+
+            for (int j = 0; j < COL - 4; j++) {
+                
+                if (board[i][j] != ' ' &&
+                    board[i][j] != 'X' &&
+                    board[i][j] == board[i + 1][j + 1] &&
+                    board[i][j] == board[i + 2][j + 2] &&
+                    board[i][j] == board[i + 3][j + 3] &&
+                    board[i][j] == board[i + 4][j + 4]  
+                ) { return true; }
+            }
         }
 
         // If there is not a connect five in any direction, change player turn and return false.
