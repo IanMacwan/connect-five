@@ -14,7 +14,7 @@ public class WinnerScreen extends JPanel {
 
     public WinnerScreen(Container container) {
 
-        this.setSize(720, 740);
+        this.setSize(700, 700);
         this.setBackground(Color.BLACK);
         this.setVisible(true);
         this.setLayout(null);
@@ -39,7 +39,7 @@ public class WinnerScreen extends JPanel {
 
             titleOne.setText("RED");
             titleOne.setForeground(Color.RED);
-            titleOne.setBounds(265, 200, 300, 50);
+            titleOne.setBounds(250, 200, 300, 50);
 
             titleTwo.setBounds(355, 200, 300, 50);
 

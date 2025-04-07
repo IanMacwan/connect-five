@@ -15,7 +15,7 @@ public class TitleScreen extends JPanel {
 
     public TitleScreen(Container container) {
 
-        this.setSize(720, 740);
+        this.setSize(700, 700);
         this.setBackground(Color.BLACK);
         this.setVisible(true);
         this.setLayout(null);

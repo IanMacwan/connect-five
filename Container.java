@@ -9,14 +9,13 @@ public class Container {
     public Container() {
 
         mainFrame = new JFrame();
-        mainFrame.setSize(720, 740);
+        mainFrame.setSize(700, 700);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(true);
         mainFrame.setVisible(true);
 
         gameScreen = new ConnectFive(this);
         titleScreen = new TitleScreen(this);
-
 
         mainFrame.add(titleScreen); 
         mainFrame.add(gameScreen);

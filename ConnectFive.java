@@ -33,7 +33,6 @@ public class ConnectFive extends JPanel implements MouseListener {
         board = new char[ROW][COL];
         currPlayer = true;
 
-        // fillBoard();
 
         this.addMouseListener(this);
 
@@ -66,6 +65,7 @@ public class ConnectFive extends JPanel implements MouseListener {
         }
 
         this.isTie = false;
+        this.currPlayer = true;
 
     }
 
@@ -76,6 +76,7 @@ public class ConnectFive extends JPanel implements MouseListener {
             if (this.board[i][x] == ' ') {
 
                 this.board[i][x] = currPlayer ? 'R' : 'B';
+                currPlayer = !(currPlayer);
                 break;
 
             }
@@ -197,7 +198,6 @@ public class ConnectFive extends JPanel implements MouseListener {
         }
 
         // If there is not a connect five in any direction, change player turn and return false.
-        currPlayer = !(currPlayer);
         return false;
     }
 
