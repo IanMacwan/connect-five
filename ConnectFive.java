@@ -1,47 +1,55 @@
-import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
-import javax.swing.*;
+import java.awt.*;
 
-
+// Main JPanel that displays the game
 public class ConnectFive extends JPanel implements MouseListener {
     
-    private char[][] board;
-    public boolean currPlayer; // true is R, and false is B
+    private char[][] board; // Gameboard is stored in a 2D char array
+    public boolean currPlayer; // Boolean to hold the current player, true is red, and false is blue
 
-    private int mouseX;
-    public Container container;
+    public boolean isTie = false; // Boolean to tell if the game is a tie
 
-    public boolean isTie = false;
+    private int mouseX; // Variable to hold te current mouse position used to draw floating connect four peice
 
+    public Container container; // Container to hold refrence to container of program
+
+    // Finals to hold the row, column, and space lenghts
     private final int ROW = 6;
     private final int COL = 7;
     private final int SPACE = 100;
-    
 
+
+ 
     public ConnectFive(Container container) {
 
-        // Set up Jpanel.
+        // Set up Jpanel. Starts as not visible
         this.setSize((ROW*100), COL * 100);
         this.setBackground(Color.BLACK);
         this.setVisible(false);
         this.setLayout(null);
 
+        // Holds a refrence to the container that holds all JPanels, allowing each JPanel to control other JPanels
+        // This is importatnt as we need to alter the visiblilty of different JPanels from inside of other JPanels.
         this.container = container;
 
-        // Initialize the board and current player. Red will always go first.
+        // Initialize the board and current player. Red will always go first
         board = new char[ROW][COL];
         currPlayer = true;
 
-
+        // Adds the mouse listener, keep in mind that this JPanel implenets the mouse listener thus, we can simply pass in this as an arg
         this.addMouseListener(this);
 
+        // Adds the mouse motion listener to draw the floating connect four peice. Another private class is made that implements 
         CursorLocationListener cll = new CursorLocationListener();
         this.addMouseMotionListener(cll);
 
     }
 
-    // Private method to initialize gameboard by filling it with empty spaces.
+    // public method to initialize gameboard by filling it with empty spaces
+    // This method also adds up to 6 random spaces that are blocked on the board
+    // This method is called to reset the board, thus it is public so that the TitleScreen class can call it.
     public void fillBoard() {
 
         // Fills the board with empty spaces
@@ -64,19 +72,22 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         }
 
+        // Sets tie as false, to reset the player
         this.isTie = false;
-        this.currPlayer = true;
+        this.currPlayer = true; // Sets the player to red
 
     }
 
+    // Private method to drop disc, takes in the column number
     private void dropDisc(int x) {
 
         for (int i = ROW - 1; i >= 0; i--) {
 
+            // Drops disc in the lowest available space
             if (this.board[i][x] == ' ') {
 
-                this.board[i][x] = currPlayer ? 'R' : 'B';
-                currPlayer = !(currPlayer);
+                this.board[i][x] = currPlayer ? 'R' : 'B'; 
+                currPlayer = !(currPlayer); // If a valid disc has been placed, switch player turn
                 break;
 
             }
@@ -91,13 +102,16 @@ public class ConnectFive extends JPanel implements MouseListener {
     public void paint(Graphics g) {
 
         super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g; // Type cast graphics to 2D graphics
 
+        // Sets the color based on the current player
         if (currPlayer) {
             g2d.setColor(Color.RED);
         } else {
             g2d.setColor(Color.BLUE);
         }
+
+        // Draws the floating connect four peice 
         g2d.setStroke(new BasicStroke(5));
         g2d.drawOval(mouseX - 45, 0, 90, 90);
 
@@ -146,7 +160,7 @@ public class ConnectFive extends JPanel implements MouseListener {
     // Private method to check if a connect five has happened.
     private boolean checkWin() {
 
-        // Check horizontal connection five
+        // Check horizontal connect five
         for (int i = 0; i < ROW; i++) {
 
             for (int j = 0; j < COL -  4; j++) {
@@ -180,7 +194,7 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         }
 
-        // Check forward diagonal connect four 
+        // Check diagonal forward connect five 
         for (int i = 4; i < ROW; i++) {
 
             for (int j = 0; j < COL - 4; j++) {
@@ -212,7 +226,7 @@ public class ConnectFive extends JPanel implements MouseListener {
             }
         }
 
-        // If there is not a connect five in any direction, change player turn and return false.
+        // If there is not a connect five in any direction, return false
         return false;
     }
 
@@ -229,10 +243,12 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         }
 
+        // If there is a tie, then set is Tie to true, such that the WinnerScreen can display correct text
         isTie = true;
         return true;
     }
 
+    // When mouse is clicked, the disc will be dropped in the correct column
     @Override
     public void mouseClicked(MouseEvent e) { 
         
@@ -254,17 +270,22 @@ public class ConnectFive extends JPanel implements MouseListener {
 
         if (checkWin()) {
 
+            // If a win has occurred, the game window will be set to not visiable
             this.setVisible(false);
+            // Add a new instance of a winner screen to the mainFrame
+            // This is done by refrencing the container and accessing the mainFrame where all JPanels are drawn
             container.mainFrame.add(new WinnerScreen(container));
 
         } else if (checkTie()) {
 
+            // If a tie has occurred, the game window will be set to not visiable
             this.setVisible(false);
+            // Also add a new instance of a winner screen to the mainFrame
             container.mainFrame.add(new WinnerScreen(container));
 
         }
 
-
+        // Everytime we drop a disc we want to repaint the game screen
         repaint();
     } 
 
@@ -280,8 +301,11 @@ public class ConnectFive extends JPanel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {  } // Do nothing
     
+
+    // Cursor location listerner class that implements mouse motion listener to draw floating conenct four peice
     private class CursorLocationListener implements MouseMotionListener {
 
+        // When the mouse is moved update the mouseX variable and repaint.
         @Override
         public void mouseMoved(MouseEvent e) {
 
